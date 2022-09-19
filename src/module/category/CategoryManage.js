@@ -24,7 +24,7 @@ import { categoryStatus, userRole } from "../../utils/constants";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-import { debounce } from "lodash"; //tìm kiếm
+import { debounce } from "lodash"; 
 import { useAuth } from "../../contexts/auth-context";
 const CategoryManage = () => {
   const [categoryList, setCategoryList] = useState([]);

@@ -16,7 +16,7 @@ const PostManage = () => {
 
   const navigate = useNavigate();
 
-  const POST_PER_PAGE = 1;
+  const POST_PER_PAGE = 3;
 
   const [postList, setPostList] = useState([]);
   const [filter, setFilter] = useState('');
@@ -57,7 +57,6 @@ const PostManage = () => {
       });
       setLastDoc(lastVisible);
     }
-
     fetchData();
   }, [filter])
 

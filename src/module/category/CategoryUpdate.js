@@ -14,8 +14,8 @@ import { db } from '../../firebase-app/firebase-config';
 import { categoryStatus } from '../../utils/constants';
 import DashboardHeading from '../dashboard/DashboardHeading';
 
-const CategoryUpdate = () => {
-    const {
+const CategoryUpdate = () => { 
+    const { 
         control,
         formState: { isSubmitting },
         handleSubmit,
@@ -35,7 +35,7 @@ const CategoryUpdate = () => {
         async function fetchData() {
             const colRef = doc(db, 'categories', categoryId);
             const singleDoc = await getDoc(colRef);
-            reset(singleDoc.data());
+            reset(singleDoc.data()); 
         }
         fetchData();
     }, [categoryId, reset]);

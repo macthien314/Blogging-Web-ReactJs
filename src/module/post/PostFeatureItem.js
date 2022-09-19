@@ -51,14 +51,12 @@ const PostFeatureItemStyles = styled.div`
     .post {
       &-content {
         padding: 15px;
-    
       }
     }
   }
 `;
 
 const PostFeatureItem = ({ data }) => {
-
   // const [category, setCategory] = useState('');
   // const [user, setUser] = useState('');
   // useEffect(() => {
@@ -87,27 +85,30 @@ const PostFeatureItem = ({ data }) => {
   //   fetchUser();
   // }, [data.userId])
 
+  const date = data?.createdAt?.seconds
+    ? new Date(data?.createdAt?.seconds * 1000)
+    : new Date();
+  const formatDate = new Date(date).toLocaleDateString("vi-VI");
 
-  const date =data?.createdAt?.seconds ? new Date(data?.createdAt?.seconds*1000)  : new Date();
-  const formatDate = new Date(date).toLocaleDateString('vi-VI');
-
-  //lấy categiry và user thêm vào từ post 
-  const {category, user} = data;
+  //lấy categiry và user thêm vào từ post
+  const { category, user } = data;
 
   if (!data || !data.id) return null;
   return (
     <PostFeatureItemStyles>
-      <PostImage
-        url={data.image}
-        alt="unsplash"
-
-      ></PostImage>
+      <PostImage url={data.image} alt="unsplash"></PostImage>
 
       <div className="post-overlay"></div>
       <div className="post-content">
         <div className="post-top">
-          {data.category?.name && <PostCategory to={category.slug}>{category.name}</PostCategory>}
-          <PostMeta to={slugify(user?.username || '', { lower: true })} authorName={user?.fullname} date = {formatDate}></PostMeta>
+          {data.category?.name && (
+            <PostCategory to={category.slug}>{category.name}</PostCategory>
+          )}
+          <PostMeta
+            to={slugify(user?.username || "", { lower: true })}
+            authorName={user?.fullname}
+            date={formatDate}
+          ></PostMeta>
         </div>
         <PostTitle to={data.slug} size="big">
           {data.title}
