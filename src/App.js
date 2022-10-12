@@ -34,7 +34,11 @@ const DashboardLayout = React.lazy(() => import('./module/dashboard/DashboardLay
 
 function App() {
   return (
+
+
+
     <div>
+
       <AuthProvider>
         <Suspense>
           <Routes>

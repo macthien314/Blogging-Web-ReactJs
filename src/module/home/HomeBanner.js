@@ -81,8 +81,7 @@ const HomeBanner = () => {
         <img src="/img-banner.png" alt="banner" />
       </div>
       </div>
-    </div>
-      
+    </div> 
     </HomeBannerStyles>
   );
 };

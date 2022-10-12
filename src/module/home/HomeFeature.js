@@ -12,7 +12,6 @@ const HomeFeature = () => {
   useEffect(()=>{
     const colRef = collection(db, 'posts');
     const queries = query(colRef, where("status", "==", 1), where('hot', '==', true), limit(3));
-    
     onSnapshot(queries, (snapshot) => {
       const results =  [];
       snapshot.forEach(doc=> {

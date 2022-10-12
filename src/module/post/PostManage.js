@@ -3,15 +3,16 @@ import { Table } from "../../components/table";
 import { Button } from "../../components/button";
 import { Dropdown } from "../../components/dropdown";
 import DashboardHeading from "../dashboard/DashboardHeading";
-import { collection, deleteDoc, doc, getDocs, limit, onSnapshot, query, startAfter, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, query, startAfter, where } from "firebase/firestore";
 import { db } from "../../firebase-app/firebase-config";
 import { useNavigate } from "react-router-dom";
 import { ActionDelete, ActionEdit, ActionView } from "../../components/action";
 import Swal from "sweetalert2";
-import { LabelStatus } from "../../components/label";
+import { Label, LabelStatus } from "../../components/label";
 import { postStatus, userRole } from "../../utils/constants";
 import { debounce } from "lodash";
 import { useAuth } from "../../contexts/auth-context";
+import { Field } from "../../components/field";
 const PostManage = () => {
 
   const navigate = useNavigate();
@@ -23,6 +24,11 @@ const PostManage = () => {
   const [lastDoc, setLastDoc] = useState();
 
   const [total, setTotal] = useState(0);
+
+  const [categories, setCategories] = useState([]);
+  const [selectCategory, setSelectCategory] = useState('');
+
+  const [value, setValue] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -127,6 +133,18 @@ const PostManage = () => {
     setLastDoc(lastVisible);
   };
 
+    //lưu object category trong database post
+    const handleClickOption = async (item) => {
+      const colRef = doc(db, 'categories', item.id);
+      const docData = await getDoc(colRef);
+      setValue('category', {
+        id: docData.id,
+        ...docData.data()
+      });
+      setSelectCategory(item);
+    }
+  
+
   // const {userInfo} = useAuth();
   // if(userInfo.role !== userRole.ADMIN) return null;
   return (
@@ -137,9 +155,22 @@ const PostManage = () => {
       ></DashboardHeading>
       <div className="mb-10 flex justify-end gap-5">
         <div className="w-full max-w-[200px]">
-          <Dropdown>
-            <Dropdown.Select placeholder="Category"></Dropdown.Select>
-          </Dropdown>
+        <Field>   
+        <Dropdown>
+              <Dropdown.Select placeholder='Category'></Dropdown.Select>
+              <Dropdown.List>
+                {categories.length > 0 && categories.map((item) => (
+                  <Dropdown.Option key={item.id} onClick={() => handleClickOption(item)}>{item.name} </Dropdown.Option>
+                )
+                )}
+              </Dropdown.List>
+            </Dropdown>
+            {selectCategory?.name && (
+              <span className="inline-block p-3 rounded-lg bg-green-50 text-green-700  text-sm font-bold">
+                {selectCategory?.name}
+              </span>
+            )}
+          </Field>
         </div>
         <div className="w-full max-w-[300px]">
           <input
